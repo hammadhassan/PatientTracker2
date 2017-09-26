@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView, FlatList, Dimensions} from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import firebase from "firebase";
+import axios from "axios";
+// import firebase from "firebase";
 // import { List, ListItem } from 'react-native-elements';
 import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
 
@@ -19,15 +20,25 @@ static navigationOptions = {
   };
 
 PatientsData() {
-  var DataArr = [];
-  let dbRef = firebase.database().ref("Patients");
-  dbRef.on("child_added", snap => {
-    DataArr = this.state.Data;
-    DataArr.push(snap.val());
+  axios.get('https://polar-waters-56947.herokuapp.com/details')
+  .then(({data}) => {
+    alert(data);
+    var Data = data;
     this.setState({
-      Data: DataArr
-    });
-  });
+      Data
+    })
+  })
+    .catch((err) => {
+      alert(err);
+    })
+  // let dbRef = firebase.database().ref("Patients");
+  // dbRef.on("child_added", snap => {
+  //   DataArr = this.state.Data;
+  //   DataArr.push(snap.val());
+  //   this.setState({
+  //     Data: DataArr
+  //   });
+  // });
 };
 
 componentDidMount() {
@@ -43,22 +54,22 @@ componentDidMount() {
           {this.state.Data.map((value, i) => {
             return <List style={styles.list} key={i}>
               <ListItem>
-              <Text style={styles.text}>Name: {value.Patient.name}</Text>
+              <Text style={styles.text}>Name: {value.name}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Problem: {value.Patient.problem}</Text>
+              <Text style={styles.text}>Problem: {value.problem}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Date: {value.Patient.date}</Text>
+              <Text style={styles.text}>Date: {value.date}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Gender: {value.Patient.gender}</Text>
+              <Text style={styles.text}>Gender: {value.gender}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Doctor: {value.Patient.doc}</Text>
+              <Text style={styles.text}>Doctor: {value.doc}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Day of Appointment: {value.Patient.day}</Text>
+              <Text style={styles.text}>Day of Appointment: {value.day}</Text>
               </ListItem>
             </List>
           })}
