@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, FlatList, Dimensions} from 'react-native';
+import { StyleSheet, View, ScrollView, FlatList, Dimensions, ActivityIndicator, Button} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import axios from "axios";
-// import firebase from "firebase";
 // import { List, ListItem } from 'react-native-elements';
-import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, } from 'native-base';
 
 export default class Details extends Component {
   constructor(props) {
     super(props)
     this.state = {
-    Data : []
+    Data : [],
+    date: this.props.addPatients,
+    isLoading: false
   };
   this.PatientsData = this.PatientsData.bind(this);
 }
@@ -22,24 +23,28 @@ static navigationOptions = {
 PatientsData() {
   axios.get('https://polar-waters-56947.herokuapp.com/details')
   .then(({data}) => {
-    alert(data);
+    // alert(data);
     var Data = data;
     this.setState({
-      Data
+      Data,
+      isLoading: true
     })
   })
     .catch((err) => {
       alert(err);
     })
-  // let dbRef = firebase.database().ref("Patients");
-  // dbRef.on("child_added", snap => {
-  //   DataArr = this.state.Data;
-  //   DataArr.push(snap.val());
-  //   this.setState({
-  //     Data: DataArr
-  //   });
-  // });
 };
+
+refreshList() {
+  if (this.state.isLoading === false) {
+    return <ActivityIndicator size={50}/>
+  } return (
+          <Button 
+          title="Refresh List"
+          onPress={this.PatientsData} 
+          />
+    )
+}
 
 componentDidMount() {
   this.PatientsData();
@@ -49,6 +54,7 @@ componentDidMount() {
   render() {
     return (
         <ScrollView style={styles.container}>
+          {this.refreshList()}
           <Container style={styles.container}>
           <Content style={styles.container}>
           {this.state.Data.map((value, i) => {
@@ -66,7 +72,7 @@ componentDidMount() {
               <Text style={styles.text}>Gender: {value.gender}</Text>
               </ListItem>
               <ListItem>
-              <Text style={styles.text}>Doctor: {value.doc}</Text>
+              <Text style={styles.text}>Doctor: {value.doctor}</Text>
               </ListItem>
               <ListItem>
               <Text style={styles.text}>Day of Appointment: {value.day}</Text>
@@ -76,6 +82,7 @@ componentDidMount() {
           </Content>
           </Container>
           </ScrollView>
+      
       );
     }
   }
@@ -84,9 +91,6 @@ const { height, width } = Dimensions.get('window') ;
 
 const styles = StyleSheet.create({
   container: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
   backgroundColor: "white"
   },
   list: {
@@ -98,29 +102,3 @@ const styles = StyleSheet.create({
     marginRight: 20
   }
 })
-
-// /*
-// {this.state.Data.map((value, i) => {
-//             return <View key={i}>
-//               <Text>Name: {value.Patient.name}</Text>
-//               <Text>Problem: {value.Patient.problem}</Text>
-//               <Text>Date: {value.Patient.date}</Text>
-//               <Text>Gender: {value.Patient.gender}</Text>
-//               <Text>Doctor: {value.Patient.doc}</Text>
-//               <Text>Day of Appointment: {value.Patient.day}</Text>
-//             </View>
-//           })}
-
-//           <FlatList
-//         data={this.state.Data}
-//         renderItem={({item, index}) => {
-//           <View style={styles.margin20} key={index}>
-//             <Text>Name: {item.name}</Text>
-//               <Text>Problem: {item.problem}</Text>
-//               <Text>Date: {item.date}</Text>
-//               <Text>Gender: {item.gender}</Text>
-//               <Text>Doctor: {item.doc}</Text>
-//               <Text>Day of Appointment: {item.day}</Text>
-//           </View>
-//         }}/>
-// */

@@ -18,11 +18,11 @@ export default class PatientForm extends Component {
       problem: "",
       gender: "",
       doctor:"",
+      date: "",
       day: ""
 };
     this.onGenderSelect = this.onGenderSelect.bind(this);
     this.onDaySelect = this.onDaySelect.bind(this);
-    // this.setItem = this.setItem.bind(this);
     console.ignoredYellowBx =['Setting a timer'];
   }
 
@@ -37,17 +37,11 @@ export default class PatientForm extends Component {
         problem: this.state.problem,
         gender: this.state.gender,
         date: fullDate,
-        doc: this.state.doc,
+        doctor: this.state.doctor,
         day: this.state.day,
     }
-    console.log("data Obj", PatientsData)
-    
-    // axios({
-    //         method: 'post',
-    //         url: 'https://patientapp-server.herokuapp.com/addpatient',
-    //         data: PatientsData
-    //     })
-       return axios.post('https://patientapp-server.herokuapp.com/addpatient', PatientsData)
+    // console(PatientsData)
+       return axios.post('https://polar-waters-56947.herokuapp.com/addpatient', PatientsData)
             .then((data) => {
               this.setState({
               name: "",
@@ -61,14 +55,8 @@ export default class PatientForm extends Component {
             .catch((err) => {
                 alert("Error")
             })
-    // this.props.navigation.navigate('Details');
+    this.props.navigation.navigate('Details');
   }
-
-  // setItem(obj) {
-  //       arrayToPushedData = this.state.setData;
-  //       arrayToPushedData.push(obj);
-  //       // console.log(obj)
-  //   }
 
   onGenderSelect = (gender) => {
     this.setState({
@@ -113,9 +101,9 @@ componentWillMount() {
             </Picker>
                   <FormLabel>Doctor</FormLabel>
                     <FormInput 
-                    value={this.state.doc} 
+                    value={this.state.doctor} 
                     placeholder="Doctor Name" 
-                    onChangeText={(text) => { this.setState({ doc: text }) }}
+                    onChangeText={(text) => { this.setState({ doctor: text }) }}
                     />
             <FormLabel>Day of Appointment</FormLabel>
             <Picker
