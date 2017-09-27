@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,  TextInput, StyleSheet } from 'react-native';
-// import * as firebase from "firebase";
+import axios from "axios";
 import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
 
 class SearchByName extends Component {
@@ -14,7 +14,7 @@ class SearchByName extends Component {
     constructor() {
         super()
         this.state = {
-            data: [],
+            Data: [],
             name: ""
         }
     }
@@ -22,25 +22,30 @@ class SearchByName extends Component {
 	getDataByName() {
             var array = []
             var foundedData = []
-            let dataBase = firebase.database().ref().child("Patients")
-            dataBase.on("value", (object) => {
-                let key = object.val()
-                for (var a in key) {
-                    array.push(key[a].Patient)
-                }
-                array.map((Patient) => {
-                    if (Patient.name === this.state.name) {
-                        foundedData.push(Patient)
+            axios.get('http://patienttracking.herokuapp.com/api/getAllPatient')
+            // dataBase.on("value", (object) => {
+              .then(({data}) => {
+                // alert(data)
+                var Data = data;
+                var key = JSON.stringify(Data)
+                // var pData = JSON.stringify(Data);
+                // alert(Data)
+                // for (var a in key) {
+                //     array.push(key[a].data)
+                // }
+                // array.map((data) => {
+                //     if (data.name === this.state.name) {
+                //         foundedData.push(data)
                 //   this.setState({
-                //     data: foundedData
+                //     Data: foundedData
                 // })
-                    }  
+                    // }  
                     // else {
                     //   alert("Data not found");
                     // }
-                })
+                // })
                 this.setState({
-                    data: foundedData
+                    Data: Data
                 })
             })
     }
@@ -61,23 +66,23 @@ class SearchByName extends Component {
                onPress={this.getDataByName.bind(this)}>
                <Text>Search Patient</Text>
              </Button>
-                {this.state.data.map((data, index) => {
+                {this.state.Data.map((Data, index) => {
                     return    (
             <List key={index} style={styles.list}>
                 <ListItem  bordered>
-                  <Text style={styles.pList} >Name : {data.name}</Text>
+                  <Text style={styles.pList} >Name : {Data.name}</Text>
                 </ListItem>
                 <ListItem >
-                  <Text style={styles.pList}>Problem : {data.problem}</Text>
+                  <Text style={styles.pList}>Problem : {Data.problem}</Text>
                 </ListItem>
                 <ListItem>
-                  <Text style={styles.pList}> Date: {data.date}</Text>
+                  <Text style={styles.pList}> Date: {Data.date}</Text>
                 </ListItem>
                 <ListItem>
-                  <Text style={styles.pList}>Gender : {data.gender}</Text>
+                  <Text style={styles.pList}>Gender : {Data.gender}</Text>
                 </ListItem>
       		   <ListItem>
-                  <Text style={styles.pList}> Doctor : {data.doc}</Text>
+                  <Text style={styles.pList}> Doctor : {Data.doc}</Text>
                 </ListItem>
            </List>
                     )
