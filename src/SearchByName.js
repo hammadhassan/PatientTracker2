@@ -66,23 +66,23 @@ class SearchByName extends Component {
                onPress={this.getDataByName.bind(this)}>
                <Text>Search Patient</Text>
              </Button>
-                {this.state.Data.map((Data, index) => {
+                {this.state.Data.map((value, index) => {
                     return    (
             <List key={index} style={styles.list}>
                 <ListItem  bordered>
-                  <Text style={styles.pList} >Name : {Data.name}</Text>
+                  <Text style={styles.pList} >Name : {value.name}</Text>
                 </ListItem>
                 <ListItem >
-                  <Text style={styles.pList}>Problem : {Data.problem}</Text>
+                  <Text style={styles.pList}>Problem : {value.problem}</Text>
                 </ListItem>
                 <ListItem>
-                  <Text style={styles.pList}> Date: {Data.date}</Text>
+                  <Text style={styles.pList}> Date: {value.date}</Text>
                 </ListItem>
                 <ListItem>
-                  <Text style={styles.pList}>Gender : {Data.gender}</Text>
+                  <Text style={styles.pList}>Gender : {value.gender}</Text>
                 </ListItem>
       		   <ListItem>
-                  <Text style={styles.pList}> Doctor : {Data.doc}</Text>
+                  <Text style={styles.pList}> Doctor : {value.doc}</Text>
                 </ListItem>
            </List>
                     )
