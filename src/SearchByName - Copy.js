@@ -4,6 +4,7 @@ import axios from "axios";
 import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
 
 class SearchByName extends Component {
+
     componentWillMount() {
         console.disableYellowBox = true
     }
@@ -18,45 +19,68 @@ class SearchByName extends Component {
         }
     }
 
-	getDataByName() {
-            axios.get('https://polar-waters-56947.herokuapp.com/details')
-              .then(({data}) => {
-                // .then((data) => {
-                let array = []
-                var foundedData = []
-                // let mydata = JSON.parse(data)
-                let mydata = data
-                console.log(mydata)   
-                // console.log(mydata.length)             
-                console.log(array)
-                for ( i = 0; i < mydata.length; i++) {
-                  array.push(mydata[i]);
-                  console.log(array)
-                  console.log(array.data.name)
-                  console.log(this.state.Data)
-                }
-                array.map((obj) => {
-                  if (obj.name === this.state.Data) {
-                    foundedData.push(obj)
-                  }
-                })
+adddata(_){
+                var Data= this.state.name.filter((Data)=> this.search(Data, _) )
                 this.setState({
-                    Data: foundedData
+                    Data
                 })
-              //   .catch((err) => console.warn(err)
-              // )
-            })
+       }
+	// getDataByName() {
+    componentDidMount(){
+            var array = []
+            var foundedData = []
+            axios.get('https://polar-waters-56947.herokuapp.com/details'
+            // {
+            //   params: {
+            //     name: "hammad"
+            //   }
+            // }
+            )
+            // dataBase.on("value", (object) => {
+              .then(({data}) => {
+                // let key = data.val()
+                // for (var a in key) {
+                //     array.push(key[a].patient)
+                // }
+                // console.log(params.name);
+                // console.log(data.name);
+                // array.map((data) => {
+                //     if (data.name === this.state.name) {
+                //         foundedData.push(data)
+                  // this.setState({
+                //     Data: foundedData
+                // })console.log(Data)
+                    // }  
+                    // else {
+                    //   alert("Data not found");
+                    // }
+                // })
+                var Data = data
+                this.setState({
+                    Data
+                })
+                this.adddata('')
+              })
+                .catch((err) => console.warn(err)
+              )
     }
 
+    search(Data, what){
+           console.log(Data.date)
+           if(Data.name.toLowerCase().search(what.toLowerCase()) !== -1 || Data.date.toLowerCase() == what.toLowerCase()){
+               return true 
+          } else{
+              return false
+      }
+   }   
+    
     render() {
         return (
             <Container style={styles.container}>
             <Content style={styles.container}>
           <Item bordered>
             <Input placeholder='Enter Name' 
-                   onChangeText={(text) => {
-                    this.setState({ name: text })
-                }}
+                onChangeText={(Search)=> {this.adddata.call(this, Search)}}
             />
           </Item>
               <Button 
@@ -104,3 +128,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
 })
+
+              {/*onChangeText={(text) => {
+                    this.setState({ name: text })
+                }}*/}
+     
