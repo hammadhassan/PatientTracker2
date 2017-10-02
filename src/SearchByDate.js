@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,  TextInput, StyleSheet } from 'react-native';
-import * as firebase from "firebase";
+import axios from "axios";
 import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
 
 class SearchByDate extends Component {
@@ -14,36 +14,35 @@ class SearchByDate extends Component {
     constructor() {
         super()
         this.state = {
-            data: [],
+            Data: [],
             date: ""
         }
         this.getDataByDate = this.getDataByDate.bind(this);
     }
 
 	getDataByDate() {
-            var array = []
-            var foundedData = []
-            let dataBase = firebase.database().ref().child("Patients")
-            dataBase.on("value", (object) => {
-                let key = object.val()
-                for (var a in key) {
-                    array.push(key[a].Patient)
-                }
-                array.map((Patient) => {
-                    if (Patient.date === this.state.date) {
-                        foundedData.push(Patient)
-                //   this.setState({
-                //     data: foundedData
-                // })
-                    }  
-                    // else {
-                    //   alert("Data not found");
-                    // }
-                })
-                this.setState({
-                    data: foundedData
-                })
-            })
+            axios.get('https://polar-waters-56947.herokuapp.com/details')
+              .then(({data}) => {
+              console.log(data)
+              let newdata = []
+              var foundedData = []
+              for ( i = 0; i < data.length; i++) {
+                  newdata.push(data[i]);
+                  // console.log(newdata)
+                  // console.log(this.state.data)
+              }
+              newdata.map((obj) => {
+                  if (obj.date === this.state.date) {
+                      foundedData.push(obj)
+                      // console.log(obj)
+                  }
+                })                 
+                 this.setState({
+                 Data: foundedData  
+               })
+      })
+          .catch((err) => console.warn(err)
+          )
     }
 
     render() {
@@ -62,23 +61,23 @@ class SearchByDate extends Component {
                onPress={this.getDataByDate}>
                <Text>Search Patient</Text>
              </Button>
-                {this.state.data.map((data, index) => {
+                {this.state.Data.map((value, index) => {
                     return    (    
             <List key={index} style={styles.list}>
                 <ListItem  bordered>
-                  <Text style={styles.pList} >Name : {data.name}</Text>
+                  <Text style={styles.pList} >Name : {value.name}</Text>
                 </ListItem>
                 <ListItem bordered>
-                  <Text style={styles.pList}>Problem : {data.problem}</Text>
+                  <Text style={styles.pList}>Problem : {value.problem}</Text>
                 </ListItem>
                 <ListItem bordered>
-                  <Text style={styles.pList}> Date: {data.date}</Text>
+                  <Text style={styles.pList}> Date: {value.date}</Text>
                 </ListItem>
                 <ListItem bordered>
-                  <Text style={styles.pList}>Gender : {data.gender}</Text>
+                  <Text style={styles.pList}>Gender : {value.gender}</Text>
                 </ListItem >
       		   <ListItem bordered>
-                  <Text style={styles.pList}> Doctor : {data.doc}</Text>
+                  <Text style={styles.pList}> Doctor : {value.doctor}</Text>
                 </ListItem>
            </List>
                     )

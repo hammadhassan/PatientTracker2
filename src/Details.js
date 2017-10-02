@@ -36,7 +36,7 @@ PatientsData() {
 };
 
 refreshList() {
-  if (this.state.isLoading === false) {
+  if (this.state.isLoading === true) {
     return <ActivityIndicator size={50}/>
   } return (
           <Button 

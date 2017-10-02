@@ -16,36 +16,32 @@ class SearchByName extends Component {
             Data: [],
             name: ""
         }
+       this.getDataByName = this.getDataByName.bind(this);
     }
 
-	getDataByName() {
-            axios.get('https://polar-waters-56947.herokuapp.com/details')
+getDataByName() {
+              axios.get('https://polar-waters-56947.herokuapp.com/details')
               .then(({data}) => {
-                // .then((data) => {
-                let array = []
-                var foundedData = []
-                // let mydata = JSON.parse(data)
-                let mydata = data
-                console.log(mydata)   
-                // console.log(mydata.length)             
-                console.log(array)
-                for ( i = 0; i < mydata.length; i++) {
-                  array.push(mydata[i]);
-                  console.log(array)
-                  console.log(array.data.name)
-                  console.log(this.state.Data)
-                }
-                array.map((obj) => {
-                  if (obj.name === this.state.Data) {
-                    foundedData.push(obj)
+              console.log(data)
+              let newdata = []
+              var foundedData = []
+              for ( i = 0; i < data.length; i++) {
+                  newdata.push(data[i]);
+                  // console.log(newdata)
+                  // console.log(this.state.data)
+              }
+              newdata.map((obj) => {
+                  if (obj.name === this.state.name) {
+                      foundedData.push(obj)
+                      // console.log(obj)
                   }
-                })
-                this.setState({
-                    Data: foundedData
-                })
-              //   .catch((err) => console.warn(err)
-              // )
-            })
+                })                 
+                 this.setState({
+                 Data: foundedData  
+               })
+      })
+          .catch((err) => console.warn(err)
+          )
     }
 
     render() {
@@ -61,7 +57,7 @@ class SearchByName extends Component {
           </Item>
               <Button 
               style={styles.pList}
-               onPress={this.getDataByName.bind(this)}>
+               onPress={this.getDataByName}>
                <Text>Search Patient</Text>
              </Button>
                 {this.state.Data.map((value, index) => {

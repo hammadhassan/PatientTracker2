@@ -32,7 +32,10 @@ export default class PatientForm extends Component {
     var month = date.getMonth()+1;
     var year = date.getFullYear();
     var fullDate = day + '/' + month + '/' + year;
-    var PatientsData = {
+    if (this.state.name !== '' &&  this.state.problem !== '' && this.state.gender !== ''
+        && this.state.doctor !== '' && this.state.day !== ''
+  ) {
+      var PatientsData = {
         name: this.state.name, 
         problem: this.state.problem,
         gender: this.state.gender,
@@ -55,6 +58,10 @@ export default class PatientForm extends Component {
             .catch((err) => {
                 alert("Error")
             })
+    }
+    else{
+    alert('Fill the Complete Information')
+  }
     this.props.navigation.navigate('Details');
   }
 
@@ -85,10 +92,7 @@ componentWillMount() {
                   <FormInput
                     value={this.state.problem} 
                     onChangeText={(text) => { this.setState({ problem: text }) }}
-                    placeholder="Patient Problem"
-                    placeholderTextColor= {'#dc143c'}
-                    selectionColor= {'#660000'}
-                    underlineColorAndroid= {'#660000'}    
+                    placeholder="Patient Problem"   
                     />
             <FormLabel>Gender</FormLabel>
             <Picker 
@@ -140,3 +144,9 @@ var styles = StyleSheet.create({
     justifyContent: "center"
   }
 })
+
+/*
+placeholderTextColor= {'#dc143c'}
+selectionColor= {'#660000'}
+underlineColorAndroid= {'#660000'} 
+*/
