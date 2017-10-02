@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {View, Alert, TextInput, StyleSheet, FlatList, Picker, ScrollView } from 'react-native';
-// import firebase from "firebase";
 import { FormLabel, FormInput } from 'react-native-elements';
 import { Container, Content, Text, Button } from 'native-base';
 // import { Container, Content, Item, Input, Form, Label, Button, Text } from 'native-base';
@@ -111,6 +110,7 @@ componentWillMount() {
                     />
             <FormLabel>Day of Appointment</FormLabel>
             <Picker
+            style={styles.picker}
             selectedValue={this.state.day}
             onValueChange={(text) => this.onDaySelect(text)}
             >
@@ -124,14 +124,14 @@ componentWillMount() {
               <Picker.Item label="Sunday" value="Sunday" />
             </Picker>
             
-            <Container>
+          <Container style={styles.list}>
           <Content>
             <Button primary
             onPress={this.addPatients.bind(this)}
             style={styles.button}
             ><Text> Add Patients </Text></Button>
           </Content>
-      </Container>
+          </Container>
           </ScrollView>
       </View>
     );
@@ -141,7 +141,22 @@ componentWillMount() {
 var styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  picker: {
+    // paddingLeft: 5,
+    // paddingRight: 26,
+    // fontSize: 16,
+    // color: "green",
+    // alignItems: "stretch"
+  },
+  list: {
+    marginTop: 5,
+    marginBottom: 5,
+    justifyContent: "center",
+    textAlign: "center",
+    alignSelf: "center",
+    flex: 2
   }
 })
 

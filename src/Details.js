@@ -11,9 +11,10 @@ export default class Details extends Component {
     this.state = {
     Data : [],
     date: this.props.addPatients,
-    isLoading: false
+    // isLoading: false
   };
   this.PatientsData = this.PatientsData.bind(this);
+  this.refreshList = this.refreshList.bind(this);
 }
 
 static navigationOptions = {
@@ -27,7 +28,7 @@ PatientsData() {
     var Data = data;
     this.setState({
       Data,
-      isLoading: true
+      isLoading: false
     })
   })
     .catch((err) => {
@@ -36,7 +37,7 @@ PatientsData() {
 };
 
 refreshList() {
-  if (this.state.isLoading === true) {
+  if (!this.state.isLoading === false) {
     return <ActivityIndicator size={50}/>
   } return (
           <Button 
@@ -44,7 +45,7 @@ refreshList() {
           onPress={this.PatientsData} 
           />
     )
-}
+};
 
 componentDidMount() {
   this.PatientsData();
@@ -54,7 +55,9 @@ componentDidMount() {
   render() {
     return (
         <ScrollView style={styles.container}>
+          <View style={styles.Rlist}>
           {this.refreshList()}
+          </View>
           <Container style={styles.container}>
           <Content style={styles.container}>
           {this.state.Data.map((value, i) => {
@@ -100,5 +103,13 @@ const styles = StyleSheet.create({
     marginTop :20,
     marginLeft :20,
     marginRight: 20
+  },
+  Rlist: {
+    marginTop: 5,
+    marginBottom: 5,
+    justifyContent: "center",
+    textAlign: "center",
+    alignSelf: "center",
+    flex: 2
   }
 })
