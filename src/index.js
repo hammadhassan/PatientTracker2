@@ -19,7 +19,7 @@ class Main extends Component {
       <View style={styles.container}>
           <Home
           Add={() => navigate("AddPatients")}
-          View={() => navigate("Details")}
+          View={() => navigate("Patients")}
           />
       </View>
     );

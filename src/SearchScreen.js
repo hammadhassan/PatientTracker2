@@ -19,16 +19,17 @@ static navigationOptions = {
 }
 
 const styles = StyleSheet.create({
-    search: {
+search: {
         paddingBottom: 10,
         fontSize: 24,
         justifyContent: "center",
         alignItems: "center"
     },
-    container: {
+container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "white"
+    backgroundColor: "white",
+    // alignSelf: "stretch"
   },
 });
