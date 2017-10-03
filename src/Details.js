@@ -11,7 +11,7 @@ export default class Details extends Component {
     this.state = {
     Data : [],
     date: this.props.addPatients,
-    // isLoading: false
+    isLoading: false
   };
   this.PatientsData = this.PatientsData.bind(this);
   this.refreshList = this.refreshList.bind(this);
@@ -28,7 +28,7 @@ PatientsData() {
     var Data = data;
     this.setState({
       Data,
-      isLoading: false
+      isLoading: true
     })
   })
     .catch((err) => {
@@ -37,7 +37,7 @@ PatientsData() {
 };
 
 refreshList() {
-  if (!this.state.isLoading === false) {
+  if (!this.state.isLoading) {
     return <ActivityIndicator size={50}/>
   } return (
           <Button 
