@@ -36,6 +36,9 @@ class SearchByDate extends Component {
                       foundedData.push(obj)
                       // console.log(obj)
                   }
+                  //  else {
+                  //   alert("Patient not found")
+                  // }
                 })                 
                  this.setState({
                  Data: foundedData  
