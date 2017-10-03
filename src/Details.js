@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   text: {
-    marginTop :20,
-    marginLeft :20,
-    marginRight: 20
+    marginTop :10,
+    // marginLeft :20,
+    marginRight: 10
   },
   Rlist: {
     marginTop: 5,

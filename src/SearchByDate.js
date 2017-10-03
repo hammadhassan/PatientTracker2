@@ -57,7 +57,7 @@ class SearchByDate extends Component {
             />
           </Item>
               <Button 
-              style={styles.list}
+              style={styles.btn}
                onPress={this.getDataByDate}>
                <Text>Search Patient</Text>
              </Button>
@@ -100,14 +100,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white"
   },
-  list: {
-    marginTop :20,
-    marginLeft :20,  
-    marginTop: 5,
-    marginBottom: 5,
-    justifyContent: "center",
-    textAlign: "center",
+  btn: {
+    marginTop :10,
+    marginBottom: 10,
     alignSelf: "center",
-    flex: 2
   }
 })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View,  TextInput, StyleSheet } from 'react-native';
+import { View,  TextInput, StyleSheet, ScrollView } from 'react-native';
 import axios from "axios";
 import { Container, Header, Content, List, ListItem, Text, Separator , Item, Input, Button } from 'native-base';
 
@@ -47,7 +47,7 @@ getDataByName() {
     render() {
         return (
             <Container style={styles.container}>
-            <Content style={styles.container}>
+              <Content style={styles.container}>
           <Item bordered>
             <Input placeholder='Enter Name' 
                    onChangeText={(text) => {
@@ -56,7 +56,7 @@ getDataByName() {
             />
           </Item>
               <Button 
-              style={styles.list}
+              style={styles.btn}
                onPress={this.getDataByName}>
                <Text>Search Patient</Text>
              </Button>
@@ -97,16 +97,11 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   container: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
-  list: {
-    marginTop :20,
-    marginLeft :20,  
-    marginTop: 5,
-    marginBottom: 5,
-    justifyContent: "center",
-    textAlign: "center",
+  btn: {
+    marginTop :10,
+    marginBottom: 10,
     alignSelf: "center",
-    flex: 2
-  }
+  },
 })
